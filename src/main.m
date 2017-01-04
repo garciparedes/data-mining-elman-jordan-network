@@ -5,6 +5,8 @@ function main()
 
 
   %[X, Y] = textread(fileroute, '%s%f', 'delimiter', ',', 'HeaderLines',1)
+  %plot (X, Y;
+  sombrero
 end;
 
 

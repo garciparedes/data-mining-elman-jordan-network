@@ -7,4 +7,4 @@
 # Sergio Garcia Prado
 # garciparedes.me
 #
-octave main.m
+octave main.m --no-gui-libs

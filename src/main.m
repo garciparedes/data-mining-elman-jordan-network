@@ -19,7 +19,6 @@ function main()
     vecN = M ./ norma;
 
     [layers, weights, shape, dw_g, O] = elman_learning(layers, weights, shape, dw_g, vecN);
-
     vecD = O .* norma;
 
     if (abs(vecD - M(size(M,1))) < 0.05);

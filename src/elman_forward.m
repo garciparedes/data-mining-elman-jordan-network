@@ -12,5 +12,6 @@ function [L, O] = elman_forward(L, W, S, I)
   for i = 2:size(S, 2);
     L{i} = sigmoid((L{i-1}' * W{i-1})');
   end;
+
   O = L{size(S,2)};
 end;

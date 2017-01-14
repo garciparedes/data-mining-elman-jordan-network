@@ -12,7 +12,7 @@ function main()
     M = Y(i:i+impact_range)
 
     norma = norm(M)
-    0.05 / norm(M);
+    0.05 / norm(M)
 
 
 

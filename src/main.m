@@ -5,29 +5,29 @@ function main()
   layers = generate_layers(shape);
   weights = generate_weights(shape);
 
-
   Y = read_from_file(file_route);
   count = 0;
+  norma = norm(Y);
+
+  for i = 1:(size(weights,2));
+    dw_g{i} = zeros(size(weights{i},1), size(weights{i},2));
+  end;
+
   for i = 1:(size(Y)-(impact_range + 1));
     M = Y(i:i+impact_range);
 
-    norma = norm(M);
-
     vecN = M ./ norma;
 
-    [layers, weights, shape, O] = elman_learning(layers, weights, shape, vecN);
+    [layers, weights, shape, dw_g, O] = elman_learning(layers, weights, shape, dw_g, vecN);
 
-    vecD = vecN .* norma;
+    vecD = O .* norma;
 
-    if (abs(O * norma - M(size(M,1))) < 0.05);
+    if (abs(vecD - M(size(M,1))) < 0.05);
       count += 1;
     end;
-
-
   endfor;
 
   result = count / (size(Y,1)-(impact_range + 1))
-
 end;
 
 

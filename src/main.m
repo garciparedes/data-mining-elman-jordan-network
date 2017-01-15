@@ -1,4 +1,7 @@
 function main()
+  clear all;
+  addpath(genpath(pwd));
+
   file_route = './../dataset/iberdrola.csv';
 
   impact_range = 20;
@@ -11,8 +14,4 @@ function main()
 
   elman_main(impact_range, shape, File, norma, L, T);
   jordan_main(impact_range, shape, File, norma, L, T);
-
 end;
-
-clear all;
-main();

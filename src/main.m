@@ -1,7 +1,7 @@
 function main()
   file_route = './../dataset/iberdrola.csv';
   impact_range = 20;
-  shape = [1,32,1];
+  shape = [1, 32, 64, 32, 1];
   layers = generate_layers(shape);
   weights = generate_weights(shape);
 
@@ -13,7 +13,9 @@ function main()
     dw_g{i} = zeros(size(weights{i},1), size(weights{i},2));
   end;
 
-  for i = 1:(size(Y)-(impact_range + 1));
+  [L, T] = generate_hold_out([1:(size(Y)-(impact_range + 1))], 2/3);
+
+  for i = L;
     M = Y(i:i+impact_range);
 
     vecN = M ./ norma;
@@ -24,7 +26,7 @@ function main()
     if (abs(vecD - M(size(M,1))) < 0.05);
       count += 1;
     end;
-  endfor;
+  end;
 
   result = count / (size(Y,1)-(impact_range + 1))
 end;

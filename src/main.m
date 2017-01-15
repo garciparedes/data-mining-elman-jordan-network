@@ -15,7 +15,9 @@ function main()
   results_elman = elman_main(impact_range, shape, File, norma, L, T);
   results_jordan = jordan_main(impact_range, shape, File, norma, L, T);
 
-  %plot([1:size(T,2)], results_elman, results_jordan);
+  %Plot results
+  %plot([1:size(T,2)], results_elman, 'color','r'); hold on;
+  %plot([1:size(T,2)], results_jordan, 'color', 'b');
 end;
 
 main();

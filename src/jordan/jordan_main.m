@@ -1,4 +1,4 @@
-function jordan_main(impact_range, shape, File, norma, L, T);
+function results_jordan = jordan_main(impact_range, shape, File, norma, L, T);
   layers = jordan_generate_layers(shape);
   weights = jordan_generate_weights(shape);
 
@@ -13,7 +13,8 @@ function jordan_main(impact_range, shape, File, norma, L, T);
 
   count = 0;
   it = 0;
-  for i = L;
+  results_jordan = zeros(size(T,2), 1);
+  for i = T;
     it += 1;
     M = File(i:i+impact_range);
 
@@ -28,10 +29,10 @@ function jordan_main(impact_range, shape, File, norma, L, T);
 
     if (abs(vecD - M(size(M,1))) < 0.05);
       count += 1;
-      result_jordan = count / it;
     end;
+    results_jordan(it) = count / it;
   end;
-  result_jordan
+  result_jordan = count / it
 end;
 
 clear all;

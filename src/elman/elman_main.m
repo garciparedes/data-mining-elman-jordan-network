@@ -1,4 +1,4 @@
-function elman_main(impact_range, shape, File, norma, L, T);
+function results_elman = elman_main(impact_range, shape, File, norma, L, T);
   layers = elman_generate_layers(shape);
   weights = elman_generate_weights(shape);
 
@@ -14,7 +14,8 @@ function elman_main(impact_range, shape, File, norma, L, T);
 
   count = 0;
   it = 0;
-  for i = L;
+  results_elman = zeros(size(T,2), 1);
+  for i = T;
     it += 1;
     M = File(i:i+impact_range);
 
@@ -29,8 +30,8 @@ function elman_main(impact_range, shape, File, norma, L, T);
 
     if (abs(vecD - M(size(M,1))) < 0.05);
       count += 1;
-      result_elman = count / it;
     end;
+    results_elman(it) = count / it;
   end;
-  result_elman
+  result_elman = count / it
 end;

@@ -12,6 +12,10 @@ function main()
   norma = norm(File);
   [L, T] = generate_hold_out(size(File)-(impact_range + 1), hold_out_rate);
 
-  elman_main(impact_range, shape, File, norma, L, T);
-  jordan_main(impact_range, shape, File, norma, L, T);
+  results_elman = elman_main(impact_range, shape, File, norma, L, T);
+  results_jordan = jordan_main(impact_range, shape, File, norma, L, T);
+
+  %plot([1:size(T,2)], results_elman, results_jordan);
 end;
+
+main();

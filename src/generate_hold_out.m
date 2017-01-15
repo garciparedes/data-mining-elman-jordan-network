@@ -3,7 +3,6 @@ function [L, T] = generate_hold_out(A, frac = 2/3);
   % frac = fraction of division
   % L = learning index set
   % T = test index set
-
-  L = A;
-  T = A;
+  L = randperm(A, round(frac * A));
+  T = setdiff([1:A], L);
 end;

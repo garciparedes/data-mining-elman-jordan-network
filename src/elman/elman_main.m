@@ -29,7 +29,8 @@ function elman_main(impact_range, shape, File, norma, L, T);
 
     if (abs(vecD - M(size(M,1))) < 0.05);
       count += 1;
-      result_elman = count / it
+      result_elman = count / it;
     end;
   end;
+  result_elman
 end;

@@ -6,7 +6,7 @@ function main()
 
   impact_range = 20;
   hold_out_rate = 2/3;
-  shape = [1, 32, 1];
+  shape = [impact_range, 10, 1];
 
   File = read_from_file(file_route);
   norma = norm(File);

@@ -1,3 +1,3 @@
 function y = dsigmoid(x)
-  y = 1.0 - x.^2;
+  y = e .^ x ./ (1 .+ e .^ x) .^2;
 end;

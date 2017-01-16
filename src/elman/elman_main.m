@@ -19,14 +19,11 @@ function results_elman = elman_main(impact_range, shape, File, norma, L, T);
     it += 1;
     M = File(i:i+impact_range);
 
-    vecN = M ./ norma;
+    vecN = normalize(M, max(M), min(M));
 
-    for j = 1:size(vecN,1)-1;
-      [layers, O] = elman_forward(layers, weights, shape, vecN(j));
-    end;
-    [layers, O] = elman_forward(layers, weights, shape, vecN(end));
+    [layers, O] = elman_forward(layers, weights, shape, vecN(1:(end-1)));
 
-    vecD = O .* norma;
+    vecD = denormalize(O, max(M), min(M));
 
     if (abs(vecD - M(size(M,1))) < 0.05);
       count += 1;

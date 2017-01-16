@@ -1,3 +1,3 @@
 function y = sigmoid(x)
-  y = tanh(x);
+  y = 1 ./ (1 .+ (e .^ (0.-x)));
 end;

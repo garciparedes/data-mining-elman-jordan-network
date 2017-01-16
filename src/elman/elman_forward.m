@@ -1,9 +1,6 @@
 function [L, O] = elman_forward(L, W, S, I)
-  % L = layers
-  % W = weights
-  % S = shapes
-  % I = input
-  % O = output
+  % L = layers, W = weights, S = shapes
+  % I = input, O = output
 
   L{1}(1:S(1)) = I;
 

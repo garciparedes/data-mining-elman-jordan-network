@@ -1,9 +1,5 @@
 function [W, dw_g, e] = backward(L, W, S, dw_g, I, lrate=0.1, momentum=0.1)
-  % L = layers
-  % W = weights
-  % S = shapes
-  % I = input
-  % e = error
+  % L = layers, W = weights, S = shapes, I = input, e = error
 
   e = I - L{end};
   delta = e .* dsigmoid(L{end});
@@ -17,4 +13,5 @@ function [W, dw_g, e] = backward(L, W, S, dw_g, I, lrate=0.1, momentum=0.1)
     W{i} += lrate * dw + momentum * dw_g{i};
     dw_g{i} = dw;
   end;
+  e = sum(e .^ 2);
 end;

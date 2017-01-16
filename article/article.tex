@@ -232,7 +232,7 @@
 			\end{figure}
 
 			\paragraph{}
-			Por contra, la generación de la estructura de la red es diferente debido a las diferencias topológicas entre las dos redes.
+			Por contra, la generación de la estructura de la red es diferente debido a las diferencias topológicas entre las dos redes. El código fuente utilizado para estas partes se muestra en las figuras \ref{code:jordan_generate_layers} y \ref{code:elman_generate_weights} en el caso de \emph{Elman} y en las figuras \ref{code:jordan_generate_layers} y \ref{code:jordan_generate_weights} en el caso de \emph{Jordan}.
 
 			\begin{figure}[htpb!]
 				\centering
@@ -265,6 +265,7 @@
 
 		\subsection{Propagación hacia adelante}
 			\paragraph{}
+			La fase de propagación hacia adelante, tal y como se ha explicado en la sección anterior, difiere según el tipo de red dado que las interconexiones entre neuronas son diferentes. Por tanto, el código fuente de la versión de \emph{Elman} se ilustra en la figura \ref{code:elman_forward} y en el caso de \emph{Jordan} en la figura \ref{code:jordan_forward}.
 
 			\begin{figure}[htpb!]
 				\centering
@@ -282,6 +283,7 @@
 
 		\subsection{Propagación hacia atrás}
 			\paragraph{}
+			Respecto de la fase de propagación hacia atrás, en la cual se trata de corregir el error hacia el valor esperado, las dos redes neuronales recurrentes comparten la misma implementación, que se corresponde con la de la figura \ref{code:backward}.
 
 			\begin{figure}[htpb!]
 				\centering
@@ -293,7 +295,7 @@
 
 		\subsection{HoldOut}
 			\paragraph{}
-
+			Para realizar tests de rendimiento en cuanto a la tasa de aciertos de las implementaciones, se ha utilizado el método de \emph{HoldOut}. Para crear las particiones se ha decidido generar 2 subconjuntos de índices respecto del conjunto global de datos, con los cuales particionar la muestra en la parte de entrenamiento así como en la de prueba. Para esto se ha utilizado la función de la figura \ref{code:generate_hold_out}.
 
 			\begin{figure}[htpb!]
 				\centering
@@ -304,9 +306,38 @@
 
 	\section{Resultados}
 
+		\paragraph{}
+		Para el análisis de resultados de esta implementación se ha utilizado, como se ha comentado previamente, un método de particionamiento de \emph{HoldOut} en dos particiones (entrenamiento y test). Este método de particionamiento se caracteriza por generar subconjuntos disjuntos, es decir, cada uno de los datos pertenece a 1 y solo 1 de los dos subconjuntos. El particionamiento se ha seguido utilizando la \textbf{regla de los $2/3$}. Esto consiste en utilizar $2/3$ del conjunto para entrenar la red neuronal mientras que el $1/3$ restante se utiliza para realizar los tests.
+
+		\paragraph{}
+		Dado que el conjunto de datos se corresponde con una serie temporal, y sabemos que tan solo tienen repercusión en los resultados los últimos 20 valores, se ha decidido que los casos sean solapamientos de estos junto con el valor esperado. Sea $X$ el conjunto de valores de entrada y $D$ el conjunto de muestras de prueba. Por tanto, los conjuntos de datos se han formado de la siguiente manera:
+
+		\begin{equation}
+			x_i \in X, i \in [1,254]
+		\end{equation}
+
+		\begin{equation}
+			d_j \in D, j \in [1,233]
+		\end{equation}
+
+		\begin{itemize}
+			\item $d_{1} = [x_{1},x_{2},...x_{20},x_{21}]$
+			\item $d_{2} = [x_{2},x_{3},...x_{21},x_{22}]$
+			\item $d_{3} = [x_{3},x_{4},...x_{22},x_{24}]$
+			\item $...$
+			\item $d_{233} = [x_{233},x_{234},...x_{253},x_{254}]$
+		\end{itemize}
+
+
+		\paragraph{}
+		Los resultados de la tasa de aciertos de la implementación no han sido muy satisfactorios ya que no llegan a superar el $50\%$ salvo casos especiales. En la gráfica de la figura \ref{plot:results} se ilustra la evolución de la tasa de aciertos según aumenta el número de muestras que han realizado el test.
+
+
 		\begin{figure}[H]
 			\begin{center}
 				\includegraphics[width=0.9\textwidth]{chart}
+				\caption{Resultados: rojo => Elman, azul => Jordan}
+				\label{plot:results}
 			\end{center}
 		\end{figure}
 

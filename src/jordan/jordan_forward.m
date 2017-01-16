@@ -1,9 +1,6 @@
 function [L, O] = jordan_forward(L, W, S, I)
-  % L = layers
-  % W = weights
-  % S = shapes
-  % I = input
-  % O = output
+  % L = layers, W = weights, S = shapes
+  % I = input, O = output
 
   L{1}(1:S(1)) = I;
   L{1}(S(1)+2:size(L{1},1)) = L{size(L,2)};

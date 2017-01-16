@@ -116,16 +116,68 @@
 		\end{figure}
 
 		\paragraph{}
-		Obviando esta diferencia topológica, el resto de la red funciona de la misma forma, por tanto, a continuación se describen el conjunto de pasos que suceden.
+		Obviando esta diferencia topológica, el resto de la red funciona de la misma forma, por tanto, a continuación se describen el conjunto de pasos que suceden. A continuación se describe el significado de las variables utilizadas en la formulación matemática:
+
+		\begin{itemize}
+			\item $y(t) = $ valores de las neuronas en el periodo $t$
+			\item $f_H() =$ función sigmoide.
+			\item $\partial f_H() =$ derivada de la función sigmoide.
+			\item $x(t) =$ valores de entrada en el periodo $t$.
+			\item $e(t) =$ error en el periodo $t$.
+			\item $W(t) =$ matriz de pesos en el periodo $t$.
+			\item $dW(t) =$ diferencial de pesos en el periodo $t$.
+			\item $l_{rate} =$ ratio de aprendizaje.
+			\item $m_{rate} =$ ratio de importancia de casos anteriores.
+		\end{itemize}
+
 
 		\subsection{Encaminamiento hacia adelante}
 
 			\paragraph{}
+			El encaminamiento hacia adelante se corresponde con la fase de propagación de los datos desde la capa de entrada hacia la capa de salida ajustandose a los pesos que tiene cada enlace. Este algoritmo es diferente para la red cada una de las dos redes neuronales, por tanto se describe su formulación matemática de manera separada ya que las diferencias en las interconexiones producen variaciones en cuanto a los índices de las mismas. A pesar de ello, la idea es común en ambas: propagar los valores según la repercusión que tengan los pesos en cada caso almacenando en la capa de contexto el contenido de la capa oculta en el caso de \emph{Elman} y la capa de salida en el caso de \emph{Elman}
+
+
+			\subsubsection{Encaminamiento hacia adelante: Elman}
+				\begin{equation}
+					y_i^1(t + 1) = f_H(\sum_{j=0}^N[0]w_{ij}^1y_j^0(t+1))
+				\end{equation}
+
+				\begin{equation}
+					y_j^0(t + 1) = f_H(\sum_{j=0}^N0w_{jk}^0x_k(t+1) + \sum_{j=0}^N[0]w_{j,N0+i}^0y_i^0(t))
+				\end{equation}
+
+			\subsubsection{Encaminamiento hacia adelante: Jordan}
+				\begin{equation}
+					y_i^1(t + 1) = f_H(\sum_{j=0}^N[0]w_{ij}^1y_j^0(t+1))
+				\end{equation}
+
+				\begin{equation}
+					y_j^0(t + 1) = f_H(\sum_{j=0}^N0w_{jk}^0x_k(t+1) + \sum_{j=0}^N[1]w_{j,N0+i}^0y_i^1(t))
+				\end{equation}
 
 		\subsection{Encaminamiento hacia atrás}
 
 			\paragraph{}
+			La fase de encaminamiento hacia atrás se corresponde con la fase de retropropagación de los errores surgidos durante la fase de encaminamiento hacia adelante de la red para así tratar de minimizar el error en futuras iteracciones y producir el aprendizaje de la red.
+			\begin{equation}
+				e(t) = x(t) - y_1(t)
+			\end{equation}
 
+			\begin{equation}
+				\delta_1(t) = e * \partial f_H(y_1(t))
+			\end{equation}
+
+			\begin{equation}
+				\delta_0(t) = (\delta_1(t) * w) * \partial f_H(y_0(t))
+			\end{equation}
+
+			\begin{equation}
+				d_w(t) = x(t) * \delta(t)
+			\end{equation}
+
+			\begin{equation}
+				w(t) = l_{rate} * \delta(t) + m_{rate}\delta(t-1)
+			\end{equation}
 
 	\section{Implementación}
 
@@ -335,7 +387,7 @@
 
 		\begin{figure}[H]
 			\begin{center}
-				\includegraphics[width=0.9\textwidth]{chart}
+				\includegraphics[width=0.7\textwidth]{chart}
 				\caption{Resultados: rojo => Elman, azul => Jordan}
 				\label{plot:results}
 			\end{center}
@@ -356,6 +408,9 @@
 
 		\bibitem{financial:article}
     	Jie Wang, Jun Wang, Wen Fang, Hongli Niu: Financial Time Series Prediction Using Elman Recurrent Random Neural Networks (2016) \url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4887655/}
+
+		\bibitem{subject}
+			Carlos Alonso Gonzalez, Teodoro Calonge Cano: Minería de datos(Uva), Redes Recurrentes (2016)
 	\end{thebibliography}
 
 \end{document}

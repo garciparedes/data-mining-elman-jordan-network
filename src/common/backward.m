@@ -1,4 +1,4 @@
-function [W, dw_g, e] = backward(L, W, S, dw_g, I, lrate=0.1, momentum=0.1)
+function [W, dw_g, e] = backward(L, W, S, dw_g, I, lrate=0.05, momentum=0.1)
   % L = layers
   % W = weights
   % S = shapes

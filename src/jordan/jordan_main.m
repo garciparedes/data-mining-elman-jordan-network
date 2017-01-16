@@ -20,7 +20,11 @@ function results_jordan = jordan_main(impact_range, shape, File, norma, L, T);
 
     vecN = normalize(M, max(M), min(M));
 
-    [layers, O] = jordan_forward(layers, weights, shape, vecN(1:(end-1)));
+    for j = 1:size(vecN,1)-1;
+          [layers, O] = jordan_forward(layers, weights, shape, vecN(j));
+    end;
+    [layers, O] = jordan_forward(layers, weights, shape, vecN(end));
+
 
     vecD = denormalize(O, max(M), min(M));
 

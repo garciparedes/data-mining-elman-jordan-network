@@ -15,6 +15,8 @@
 \usepackage{graphicx}
 \graphicspath{ {images/} }
 
+\usepackage[hidelinks]{hyperref}
+
 \usepackage{minted}
 \usepackage{float}
 \RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
@@ -151,7 +153,11 @@
  			\end{itemize}
 
 			\paragraph{}
-			Tras realizar pruebas utilizando las dos alternativas no se encontraron diferencias significativas en los resultados obtenidos por ninguna de las dos estrategias, por lo cual se ha optado por el \textbf{Enfoque en Paralelo} por su menor coste computacional derivado de un menor número de iteracciones en cada fase.
+			Tras realizar pruebas utilizando las dos alternativas no se encontraron diferencias significativas en los resultados obtenidos por ninguna de las dos estrategias, por lo cual se ha optado por el \textbf{Enfoque en Secuencial} por sus mejores resultados a pesar de su mayor coste computacional a la hora de calcular la salida.
+
+			\paragraph{}
+			En cuanto a la \emph{capa oculta} se ha escogido un tamaño de \textbf{10 neuronas} basandose en las pruebas realizadas así como en el artículo \emph{Financial Time Series Prediction Using Elman Recurrent Random Neural Networks}\cite{financial:article}.
+
 
 		\subsection{Normalización}
 
@@ -317,6 +323,8 @@
 		\bibitem{elman:article}
     	Elman: Finding Structure in Time (1990)
 
+		\bibitem{financial:article}
+    	Jie Wang, Jun Wang, Wen Fang, Hongli Niu: Financial Time Series Prediction Using Elman Recurrent Random Neural Networks (2016) \url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4887655/}
 	\end{thebibliography}
 
 \end{document}

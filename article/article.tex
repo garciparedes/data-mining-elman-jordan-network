@@ -58,7 +58,7 @@
 %-------------------------------------------------------------------------------
 
 	\begin{abstract}
-		\noindent Abstract del documento
+		\noindent Este trabajo consiste en el estudio de las redes neuronales recurrentes (RNN) de \emph{Elman} y \emph{Jordan}. En este documento se describen las fases de dichos algoritmos así como las diferencias entre ellos. Además, se ha realizado una implementación en el lenguaje \emph{Octave} basada en la aproximación a una función temporal de valores escalares procedentes de los resultados de cotización en bolsa de una empresa.
 	\end{abstract}
 
 %-------------------------------------------------------------------------------
@@ -68,21 +68,62 @@
 
   \section{Introducción}
 
-      \paragraph{}
+    \paragraph{}
+		Las \textbf{redes neuronales} consisten en una técnica, que se basa en una gran conjunto de neuronas artifiales. Cada unidad neuronal está conectada con otras de una determinada manera. Estos enlaces pueden poseer una función de combinación. Cada neurona puede tener una función encargada de combinar los valores de su entrada. Además, puede haber una función de activación en cada enlace o en la propia neurona: de tal manera que la señal debe superar el límite antes de la propagación hacia otras. Estos sistemas tienen capacidad de  autoaprendizaje. Esto se ilustra gráficamente en la figura \ref{fig:neural-network}.
+
+		\begin{figure}[htpb!]
+			\begin{center}
+				\includegraphics[width=0.75\textwidth]{neural-network}
+						\caption{Topología de una red neuronal.}
+						\label{fig:neural-network}
+				\end{center}
+		\end{figure}
+
+		\paragraph{}
+		En este documento se va a profundizar en las \textbf{redes neuronales recurrentes}. Estas son un tipo concreto de redes neuronales cuya principal característa es la interconexión recurrente de neuronas. Esto significa que una neurona puede poseer ciclos con otras neuronas, o incluso con ella misma. Esta idea fue desarrollada por \emph{Jordan} en \emph{Serial Order: A parallel distributed approach}(1986)\cite{jordan:article} y por \emph{Elman} en \emph{Finding structure in time}(1990)\cite{elman:article}.
+
+		\paragraph{}
+		Por otro lado, el conjunto de datos que se ha utilizado como ejemplo consiste en un conjunto de 254 casos correspondientes a los valores de cotización en bolsa de la empresa \textbf{Iberdrola} durante un periodo de 12 meses (Noviembre de 2015 - Diciembre de 2016). En este fichero aparecen vaios campos, a pesar de ello nos hemos centrado únicamente en el valor de \emph{Cierre}, que es el que se ha utilizado como entrada para la red neuronal.
+
 
 	\section{Redes de Elman y Jordan}
 
+		\paragraph{}
+		En sus respectivos artículos, tanto \emph{Elman} como \emph{Jordan} proponen una red neuronal con estructura de \textbf{3 capas} correspondiendose la primera a la \emph{capa de entrada}, la segunda a la \emph{capa oculta} y la tercera a la \emph{capa de salida}. Además de esto, proponen añadir un conjunto de neuronas (que denominan \emph{capa de contexto}) y las cuales pretenden dotar a la red de capacidad de recuerdo, permitiendo que estas almacenen información acerca de casos anteriores.
+
+		\paragraph{}
+		Las diferencias entre estas dos propuestas consisten en la topología de la red, en concreto, en las interconexiones con la \emph{capa de contexto}. Por tanto, la diferencia es la siguiente:
+
+		\begin{itemize}
+			\item \textbf{Red de Jordan}: La capa de contexto está conectada con la \textbf{capa de salida}.
+			\item \textbf{Red de Elman}: La capa de contexto está conectada con la \textbf{capa oculta}.
+		\end{itemize}
+
+		\paragraph{}
+		Esto tiene incidencia en las fases de propagación sobre la red (de manera explicita hacia delante y de manera implicita hacia atrás), ya que determina a partir de qué conjunto de neuronas se almacena información en la capa de contexto. Una representación gráfica de estas diferencias se muestra en la figura \ref{fig:topology}
+
+		\begin{figure}[htpb!]
+			\begin{center}
+				\includegraphics[width=0.75\textwidth]{topology}
+						\caption{Topología de las redes neuronales recurrentes de Elman y Jordan.}
+						\label{fig:topology}
+				\end{center}
+		\end{figure}
+
+		\paragraph{}
+		Obviando esta diferencia topológica, el resto de la red funciona de la misma forma, por tanto, a continuación se describen el conjunto de pasos que suceden
+
+		\paragraph{}
+
+		\subsection{Encaminamiento hacia adelante}
+
 			\paragraph{}
 
-			\subsection{Encaminamiento hacia adelante}
+		\subsection{Encaminamiento hacia atrás}
 
-				\paragraph{}
+			\paragraph{}
 
-			\subsection{Encaminamiento hacia atrás}
-
-				\paragraph{}
-
-			\subsection{Diferencias}
+		\subsection{Diferencias}
 
 	\section{Implementación}
 
@@ -97,5 +138,18 @@
 		\end{figure}
 
 		\paragraph{}
+
+%----------------------------------------------------------------------------------------
+%	Bibliographic references
+%----------------------------------------------------------------------------------------
+  \begin{thebibliography}{9}
+
+		\bibitem{jordan:article}
+    	Jordan: Serial Order: A distributed parallel approach (1986)
+
+		\bibitem{elman:article}
+    	Elman: Finding Structure in Time (1990)
+
+	\end{thebibliography}
 
 \end{document}

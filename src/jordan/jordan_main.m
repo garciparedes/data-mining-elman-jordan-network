@@ -16,19 +16,15 @@ function results_jordan = jordan_main(impact_range, shape, File, norma, L, T);
   results_jordan = zeros(size(T,2), 1);
   for i = T;
     it += 1;
-    M = File(i:i+impact_range);
+    M = File(i:i+impact_range,:);
 
     vecN = normalize(M, max(M), min(M));
 
-    for j = 1:size(vecN,1)-1;
-          [layers, O] = jordan_forward(layers, weights, shape, vecN(j));
-    end;
-    [layers, O] = jordan_forward(layers, weights, shape, vecN(end));
-
+    [layers, O] = jordan_forward(layers, weights, shape, vecN(1:(end-1)));
 
     vecD = denormalize(O, max(M), min(M));
 
-    if (abs(vecD - M(size(M,1))) < 0.05);
+    if (abs(vecD(1) - M(size(M,1),1)) < 0.05);
       count += 1;
     end;
     results_jordan(it) = count / it;

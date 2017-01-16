@@ -2,7 +2,7 @@ function main()
   clear all;
   addpath(genpath(pwd));
 
-  file_route = './../dataset/iberdrola.csv';
+  file_route = './../dataset/IberdrolaNOV15DIC16.csv';
 
   impact_range = 20;
   hold_out_rate = 2/3;

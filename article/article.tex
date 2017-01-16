@@ -142,55 +142,159 @@
 		\subsection{Datos de Entrada}
 
 			\paragraph{}
+			Tal y como se ha expuesto brevemente al principio de este documento, el conjunto de datos se corresponde con una serie temporal de valores escalares. Además, se indica que tan solo los \textbf{últimos 20 valores} tienen repercusión en el valor próximo que se desea predecir. Este hecho plantea dos enfoques diferentes de entrada hacia la red neuronal:
 
+ 			\begin{itemize}
+ 				\item \textbf{Enfoque Secuencial}: Para cada periodo de aprendizaje o predicción previamente se introducen las 20 muestras previas de manera secuencial para después obtener la siguiente. Esto implica que la red tenga una única neurona en la entrada.
+
+				\item \textbf{Enfoque en Paralelo}: Para cada periodo de aprendizaje o predicción se introducen las 20 muestras previas de una sola vez para después obtener la siguiente. Esto implica que la red tenga tantas neuronas en la entrada como muestras previas relevantes, en este caso 20.
+ 			\end{itemize}
+
+			\paragraph{}
+			Tras realizar pruebas utilizando las dos alternativas no se encontraron diferencias significativas en los resultados obtenidos por ninguna de las dos estrategias, por lo cual se ha optado por el \textbf{Enfoque en Paralelo} por su menor coste computacional derivado de un menor número de iteracciones en cada fase.
 
 		\subsection{Normalización}
+
+			\paragraph{}
+			La red neuronal está diseñada para trabajar con valores normales (en el rango $[0,1]$) debido a la función sigmoide que se define en el siguiente apartado. Por lo tanto, es necesario realizar una fase previa de normalización de los mismos. Debido a la restricción que indica que la relevancia de sucesos pasados se limita a los 20 últimos casos, se normaliza sobre estos en cada fase del algoritmo.
+
+			Para ello se utilizan las siguientes funciones para normalización y desnormalización, que colapsan el conjunto en torno a su máximo y mínimo:
+
+			\begin{equation}
+				S(t)' = frac{S(t) - min S(t)}{max S(t)- min S(t)}
+			\end{equation}
 
 			\begin{figure}[htpb!]
 				\centering
 				\inputminted{octave}{../src/common/normalize.m}
 				\caption{Octave: /src/common/normalize.m}
-				\label{code:main}
+				\label{code:normalize}
 			\end{figure}
 
+
+			\begin{equation}
+				S(t) = S(t)' (max S(t)- min S(t)) + min S(t)
+			\end{equation}
 
 			\begin{figure}[htpb!]
 				\centering
 				\inputminted{octave}{../src/common/denormalize.m}
 				\caption{Octave: /src/common/denormalize.m}
-				\label{code:main}
+				\label{code:denormalize}
 			\end{figure}
 
 		\subsection{Función Sigmoide}
 			\paragraph{}
+			La función sigmoide o función de activación es la encargada de determinar el grado de importancia que tendrá un determinado nodo de la red en el valor del siguiente. A continuación se formula la función logística así como su derivada:
+
+			\begin{equation}
+				f_H(x) = \frac{1}{1+e^(-x)}
+			\end{equation}
 
 			\begin{figure}[htpb!]
 				\centering
 				\inputminted{octave}{../src/common/sigmoid.m}
 				\caption{Octave: /src/common/sigmoid.m}
-				\label{code:main}
+				\label{code:sigmoid}
 			\end{figure}
+
+			\begin{equation}
+				\partial f_H(x) = \frac{e^x}{(1 + e^x)^2}
+			\end{equation}
 
 
 			\begin{figure}[htpb!]
 				\centering
 				\inputminted{octave}{../src/common/dsigmoid.m}
 				\caption{Octave: /src/common/dsigmoid.m}
-				\label{code:main}
+				\label{code:dsigmoid}
 			\end{figure}
 
-
 		\subsection{Inicialización}
+
 			\paragraph{}
+			La fase de inicialización se corresponde con la creación de la matriz de capas así como la inicialización de la matriz de pesos, que en este caso se han decido generar aleatoriamente en el rango $[-0.25,0.25]$.
+
+			\paragraph{}
+			La función de generación de pesos aleatorios se muestra en la figura \ref{code:random_weights} y es común a los dos métodos (\emph{Elman} y \emph{Jordan})
+
+			\begin{figure}[htpb!]
+				\centering
+				\inputminted{octave}{../src/common/random_weights.m}
+				\caption{Octave: /src/common/random\_weights.m}
+				\label{code:random_weights}
+			\end{figure}
+
+			\paragraph{}
+			Por contra, la generación de la estructura de la red es diferente debido a las diferencias topológicas entre las dos redes.
+
+			\begin{figure}[htpb!]
+				\centering
+				\inputminted{octave}{../src/elman/elman_generate_layers.m}
+				\caption{Octave: /src/elman/elman\_generate\_layers.m}
+				\label{code:jordan_generate_layers}
+			\end{figure}
+
+			\begin{figure}[htpb!]
+				\centering
+				\inputminted{octave}{../src/elman/elman_generate_weights.m}
+				\caption{Octave: /src/elman/elman\_generate\_weights.m}
+				\label{code:elman_generate_weights}
+			\end{figure}
+
+			\begin{figure}[htpb!]
+				\centering
+				\inputminted{octave}{../src/jordan/jordan_generate_layers.m}
+				\caption{Octave: /src/jordan/jordan\_generate\_layers.m}
+				\label{code:jordan_generate_layers}
+			\end{figure}
+
+			\begin{figure}[htpb!]
+				\centering
+				\inputminted{octave}{../src/jordan/jordan_generate_weights.m}
+				\caption{Octave: /src/jordan/jordan\_generate\_weights.m}
+				\label{code:jordan_generate_weights}
+			\end{figure}
+
 
 		\subsection{Propagación hacia adelante}
 			\paragraph{}
 
+			\begin{figure}[htpb!]
+				\centering
+				\inputminted{octave}{../src/elman/elman_forward.m}
+				\caption{Octave: /src/elman/elman\_forwards.m}
+				\label{code:elman_forward}
+			\end{figure}
+
+			\begin{figure}[htpb!]
+				\centering
+				\inputminted{octave}{../src/jordan/jordan_forward.m}
+				\caption{Octave: /src/jordan/jordan\_forward.m}
+				\label{code:jordan_forward}
+			\end{figure}
+
 		\subsection{Propagación hacia atrás}
 			\paragraph{}
 
+			\begin{figure}[htpb!]
+				\centering
+				\inputminted{octave}{../src/common/backward.m}
+				\caption{Octave: /src/common/backward.m}
+				\label{code:backward}
+			\end{figure}
+
+
 		\subsection{HoldOut}
 			\paragraph{}
+
+
+			\begin{figure}[htpb!]
+				\centering
+				\inputminted{octave}{../src/common/generate_hold_out.m}
+				\caption{Octave: /src/common/generate\_hold\_out.m}
+				\label{code:generate_hold_out}
+			\end{figure}
 
 	\section{Resultados}
 

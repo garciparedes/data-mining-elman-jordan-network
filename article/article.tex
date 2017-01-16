@@ -15,6 +15,9 @@
 \usepackage{graphicx}
 \graphicspath{ {images/} }
 
+\usepackage{minted}
+\usepackage{float}
+\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
 
 
 \usepackage{abstract}
@@ -111,9 +114,7 @@
 		\end{figure}
 
 		\paragraph{}
-		Obviando esta diferencia topológica, el resto de la red funciona de la misma forma, por tanto, a continuación se describen el conjunto de pasos que suceden
-
-		\paragraph{}
+		Obviando esta diferencia topológica, el resto de la red funciona de la misma forma, por tanto, a continuación se describen el conjunto de pasos que suceden.
 
 		\subsection{Encaminamiento hacia adelante}
 
@@ -123,11 +124,73 @@
 
 			\paragraph{}
 
-		\subsection{Diferencias}
 
 	\section{Implementación}
 
-		\paragraph{}
+		La sección de implementación se divide en un primer apartado que explica la ejecucción del código de ejemplo seguido de los apartados que explican en detalle cada una de las partes del código fuente
+
+
+		\subsection{Guía de ejecucción}
+
+			\paragraph{}
+			La implementación realizada se ha llevado a cabo en el lenguaje Octave. Se incluyen todos los ficheros de código fuente para poder ejecutar la implementación. Estos se alojan en el directorio \textbf{/src}. Además, se ha añadido un script bash de prueba denominado \textbf{run.sh} el cual permite ejecutar la implementación a partir del terminal si así se desea.
+
+			\paragraph{}
+			También se puede iniciar desde el entorno gráfico de Octave asignando el directorio \textbf{/src} como directorio de trabajo y seguidamente llamando a la funcion \textbf{main()}.
+
+
+		\subsection{Datos de Entrada}
+
+			\paragraph{}
+
+
+		\subsection{Normalización}
+
+			\begin{figure}[htpb!]
+				\centering
+				\inputminted{octave}{../src/common/normalize.m}
+				\caption{Octave: /src/common/normalize.m}
+				\label{code:main}
+			\end{figure}
+
+
+			\begin{figure}[htpb!]
+				\centering
+				\inputminted{octave}{../src/common/denormalize.m}
+				\caption{Octave: /src/common/denormalize.m}
+				\label{code:main}
+			\end{figure}
+
+		\subsection{Función Sigmoide}
+			\paragraph{}
+
+			\begin{figure}[htpb!]
+				\centering
+				\inputminted{octave}{../src/common/sigmoid.m}
+				\caption{Octave: /src/common/sigmoid.m}
+				\label{code:main}
+			\end{figure}
+
+
+			\begin{figure}[htpb!]
+				\centering
+				\inputminted{octave}{../src/common/dsigmoid.m}
+				\caption{Octave: /src/common/dsigmoid.m}
+				\label{code:main}
+			\end{figure}
+
+
+		\subsection{Inicialización}
+			\paragraph{}
+
+		\subsection{Propagación hacia adelante}
+			\paragraph{}
+
+		\subsection{Propagación hacia atrás}
+			\paragraph{}
+
+		\subsection{HoldOut}
+			\paragraph{}
 
 	\section{Resultados}
 
